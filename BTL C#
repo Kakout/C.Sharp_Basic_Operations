@@ -1,0 +1,226 @@
+using System;
+using System.Collections;
+
+class MyHashtableManager
+{
+    private Hashtable hashtable;
+
+    // Hàm khởi tạo, tạo mới một Hashtable khi đối tượng được tạo ra
+    public MyHashtableManager()
+    {
+        hashtable = new Hashtable();
+    }
+
+    //// Hàm thêm một phần tử mới vào Hashtable
+    //public void AddElement(int key, string value)
+    //{
+    //    if (!hashtable.ContainsKey(key))
+    //    {
+    //        hashtable.Add(key, value);
+    //        Console.WriteLine($"Da them phan tu: Key = {key}, Value = {value}");
+    //        DisplayElements();
+    //    }
+    //    else
+    //    {
+    //        Console.WriteLine($"Phan tu voi key = {key} da ton tai.");
+    //    }
+    //}
+    // Thêm hàm tạo dữ liệu ngẫu nhiên
+    public void random(int count)
+    {
+        Random rand = new Random();
+        for (int i = 0; i < count; i++)
+        {
+            int key = rand.Next(100); // Giả sử key được tạo từ 0 đến 99
+            string value = "value" + i; // Giá trị tạo theo số thứ tự
+            if (!hashtable.ContainsKey(key))
+            {
+                hashtable.Add(key, value);
+            }
+        }
+        Console.WriteLine($"Da tao {count} phan tu ngau nhien.");
+        DisplayElements();
+    }
+
+
+    // Hàm chèn một phần tử mới vào Hashtable
+    public void InsertElement(int key, string value)
+    {
+        hashtable[key] = value;
+        Console.WriteLine($"Da chen phan tu: Key = {key}, Value = {value}");
+        DisplayElements();
+    }
+
+    // Hàm xóa một phần tử từ Hashtable dựa trên key
+    public void RemoveElement(int key)
+    {
+        if (hashtable.ContainsKey(key))
+        {
+            hashtable.Remove(key);
+            Console.WriteLine($"Da xoa phan tu co key = {key}");
+            DisplayElements();
+        }
+        else
+        {
+            Console.WriteLine($"Khong tim thay phan tu co key = {key}");
+        }
+    }
+
+    // Hàm hiển thị tất cả các phần tử trong Hashtable
+    public void DisplayElements()
+    {
+        Console.WriteLine("Danh sach cac phan tu trong Hashtable:");
+        foreach (DictionaryEntry entry in hashtable)
+        {
+            Console.WriteLine($"Key: {entry.Key}, Value: {entry.Value}");
+        }
+    }
+
+    // Hàm đọc phần tử từ Hashtable dựa trên key và trả về giá trị tương ứng
+    public void ReadElement(int key)
+    {
+        if (hashtable.ContainsKey(key))
+        {
+            Console.WriteLine($"Gia tri cua phan tu co key = {key} la: {hashtable[key]}");
+        }
+        else
+        {
+            Console.WriteLine($"Khong tim thay phan tu co key = {key}");
+        }
+    }
+
+    // Hàm xuất phần tử từ Hashtable dựa trên key
+    public void OutputElement()
+    {
+        Console.Write("Nhap key cua phan tu muon xuat: ");
+        int key = int.Parse(Console.ReadLine());
+        ReadElement(key);
+    }
+    //  hàm tìm kiếm thông tin 
+    public void SearchElement(string value)
+    {
+        bool found = false;
+        Console.WriteLine($"Cac phan tu co gia tri '{value}':");
+        foreach (DictionaryEntry entry in hashtable)
+        {
+            if (entry.Value.ToString() == value)
+            {
+                Console.WriteLine($"Key: {entry.Key}, Value: {entry.Value}");
+                found = true;
+            }
+        }
+        if (!found)
+        {
+            Console.WriteLine($"Khong tim thay phan tu nao voi gia tri '{value}'.");
+        }
+    }
+
+    //  hàm sắp xếp các phần tử theo key
+    public void SortElementsByKey()
+    {
+        ArrayList sortedKeys = new ArrayList(hashtable.Keys);
+        sortedKeys.Sort();
+        Console.WriteLine("Danh sach cac phan tu da sap xep theo key:");
+        foreach (var key in sortedKeys)
+        {
+            Console.WriteLine($"Key: {key}, Value: {hashtable[key]}");
+        }
+    }
+
+    // Hàm thực thi chương trình quản lý Hashtable
+    public void Run()
+    {
+        bool continueLoop = true;
+        while (continueLoop)
+        {
+            Console.Clear();
+            DisplayElements();
+            Console.WriteLine();
+            Console.WriteLine("************************** MENU **************************");
+            Console.WriteLine("*--------------------------------------------------------*");
+            Console.WriteLine("* 1. Them phan tu                                        *");
+            Console.WriteLine("* 2. Hien thi phan tu                                    *");
+            Console.WriteLine("* 3. Doc phan tu theo key                                *");
+            Console.WriteLine("* 4. Xuat phan tu theo key                               *");
+            Console.WriteLine("* 5. Chen phan tu                                        *");
+            Console.WriteLine("* 6. Xoa phan tu theo key                                *");
+            Console.WriteLine("* 7. Tim kiem thong tin theo value                       *");
+            Console.WriteLine("* 8. Sap xep cac phan tu theo key                        *");
+            Console.WriteLine("* 9. Thoat chuong trinh                                  *");
+            Console.WriteLine("* 10.Them phan tu random                                 *");
+            Console.WriteLine("**********************************************************");
+
+            Console.Write("Chon mot tuy chon tu menu: ");
+            string choice = Console.ReadLine();
+
+            switch (choice)
+            {
+                //case "1":
+                //    Console.Write("Nhap key cho phan tu moi: ");
+                //    int newKey = int.Parse(Console.ReadLine());
+                //    Console.Write("Nhap value cho phan tu moi: ");
+                //    string newValue = Console.ReadLine();
+                //    AddElement(newKey, newValue);
+                //    break;
+                case "2":
+                    DisplayElements();
+                    break;
+                case "3":
+                    Console.Write("Nhap key cua phan tu muon doc: ");
+                    int readKey = int.Parse(Console.ReadLine());
+                    ReadElement(readKey);
+                    break;
+                case "4":
+                    OutputElement();
+                    break;
+                case "5":
+                    Console.Write("Nhap key cho phan tu moi: ");
+                    int insertKey = int.Parse(Console.ReadLine());
+                    Console.Write("Nhap value cho phan tu moi: ");
+                    string insertValue = Console.ReadLine();
+                    InsertElement(insertKey, insertValue);
+                    break;
+                case "6":
+                    Console.Write("Nhap key cua phan tu muon xoa: ");
+                    int deleteKey = int.Parse(Console.ReadLine());
+                    RemoveElement(deleteKey);
+                    break;
+                case "9":
+                    continueLoop = false;
+                    break;
+                case "7":
+                    Console.Write("Nhap gia tri muon tim kiem: ");
+                    string searchValue = Console.ReadLine();
+                    SearchElement(searchValue);
+                    break;
+                case "8":
+                    SortElementsByKey();
+                    break;
+                case "10":
+                    Console.Write("Nhap so luong phan tu muon tao ngau nhien: ");
+                    int randomCount = int.Parse(Console.ReadLine());
+                   random(randomCount);
+                    break;
+
+                default:
+                    Console.WriteLine("Lua chon khong hop le. Vui long chon lai.");
+                    break;
+            }
+
+            Console.WriteLine(); // In mot dong trong de tao khoang cach giua cac lan lap
+            Console.Write("Nhan Enter de tiep tuc...");
+            Console.ReadLine();
+        }
+
+        Console.WriteLine("Chuong trinh ket thuc.");
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        MyHashtableManager hashtableManager = new MyHashtableManager();
+        hashtableManager.Run();
+    }
+}
